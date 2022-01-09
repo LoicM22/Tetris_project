@@ -1,6 +1,6 @@
 #include <FastLED.h>
 #define LED_PIN     6
-#define NUM_LEDS    64
+#define NUM_LEDS    1
 
 
 
@@ -24,16 +24,25 @@ void loop() {
   float tension = (resultVolts / R1 * (R1 + R2))-0.5;
 
   float pourc_volt = (tension/9.80)*100;
-
-  if (pourc_volt > 75){
-    leds[0] = CRGB(0, 4, 0);
+  Serial.println(pourc_volt);
+  
+  if (pourc_volt > 80){
+    leds[0] = CRGB(0, 4, 4);
     FastLED.show();
   }
-  if ((pourc_volt>40) && (pourc_volt<75)){
+  if ((pourc_volt>60) && (pourc_volt<80)){
+    leds[0] = CRGB(0, 4, 0);
+    FastLED.show(); 
+  }
+  if ((pourc_volt>40) && (pourc_volt<60)){
     leds[0] = CRGB(4, 4, 0);
     FastLED.show(); 
   }
-  if (pourc_volt<40){
+  if ((pourc_volt>20) && (pourc_volt<40)){
+    leds[0] = CRGB(4, 1, 0);
+    FastLED.show(); 
+  }
+  if (pourc_volt<20){
     leds[0] = CRGB(4, 0, 0);
     FastLED.show();
   }

@@ -71,10 +71,6 @@ void checkSettings()
   Serial.println();
 }
 
-int mach_etatx(){
-  
-}
-
 void loop() {
   
   while (i<9){
@@ -190,7 +186,6 @@ void loop() {
     
     switch(cas){
     case 0:
-      Serial.println(
       break;
     case 1:
       Serial.println("down");
