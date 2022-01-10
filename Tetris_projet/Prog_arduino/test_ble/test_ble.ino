@@ -10,7 +10,7 @@ void setup()
 pinMode(rxPin, INPUT);
 pinMode(txPin, OUTPUT);
 mySerial.begin(9600);
-Serial.begin(9600);
+Serial.begin(115200);
 }
 void loop()
 {
@@ -33,13 +33,17 @@ void loop()
   while(mySerial.available())
   Serial.print((char)mySerial.read());*/
   mySerial.println("gauche");
-  delay(5000);
+  Serial.println("gauche");
+  delay(1000);
   mySerial.println("droite");
-  delay(5000);
+  Serial.println("droite");
+  delay(1000);
   mySerial.println("gauche");
-  delay(5000);
+  Serial.println("gauche");
+  delay(1000);
   mySerial.println("droite");
-  delay(5000);
+  Serial.println("droite");
+  delay(1000);
   /*mySerial.println("immobile");
   delay(1000);*/
 }

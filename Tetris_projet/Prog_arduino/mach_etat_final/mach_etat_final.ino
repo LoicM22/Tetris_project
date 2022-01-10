@@ -1,42 +1,6 @@
-  /* LEDs */
-
-#include <FastLED.h>
-
-  /* LED battery */
-
-#define LED_PIN_1     6
-#define NUM_LEDS_1    1
-
-  /* LED cube */
-
-#define LED_PIN_2    7
-#define NUM_LEDS_2   60
-
-  /* Bluetooth */
-#include <SoftwareSerial.h>
-#define rxPin 11 // Broche 11 en tant que RX, à raccorder sur TX du HC-05
-#define txPin 10 // Broche 10 en tant que TX, à raccorder sur RX du HC-05
-
-  /* Accelero - Gyro */
-
 #include <Wire.h>
 #include <MPU6050.h>
 
-
-/* LED battery */
-
-CRGB leds_1[NUM_LEDS_1];
-
-  /* LED cube */
-  
-CRGB leds_2[NUM_LEDS_2];
-
-  /* Bluetooth */
-
-SoftwareSerial mySerial(rxPin, txPin);
-
-  /* Accelero - Gyro */
- 
 MPU6050 mpu;
 
 // accelero left right
@@ -64,26 +28,10 @@ int state=0;
 int Sdph = 8;
 int Sdpb = 1;
 
-
-
-
 void setup() {
+  // put your setup code here, to run once:
   Serial.begin(115200);
-
-  /* LED battery */
-  FastLED.addLeds<WS2812, LED_PIN_1, GRB>(leds_1, NUM_LEDS_1);
-
-  /* LED cube */
-  FastLED.addLeds<WS2812, LED_PIN_2, GRB>(leds_2, NUM_LEDS_2);
-
-    /* Bluetooth */
-
-  pinMode(rxPin, INPUT);
-  pinMode(txPin, OUTPUT);
-  mySerial.begin(9600);
-
-     /* Accelero - Gyro */
-
+  
   Serial.println("Initialize MPU6050");
 
   while(!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G))
@@ -92,7 +40,6 @@ void setup() {
     delay(500);
   }
     checkSettings();
-
 
 }
 
@@ -134,61 +81,12 @@ void checkSettings()
   Serial.println();
 }
 
+
+
 void loop() {
-  
-  /* LED Battery */
-  
-  int resultBinary = analogRead(A0);
-  float resultVolts = resultBinary / 1023.0 * 5.0;
-  int R1 = 100;
-  int R2 = 220;
-  float tension = (resultVolts / R1 * (R1 + R2))-0.5;
+  // put your main code here, to run repeatedly:
 
-  float pourc_volt = (tension/9.80)*100;
-  
-  if (pourc_volt > 80){
-    leds_1[0] = CRGB(0, 4, 4);
-    FastLED.show();
-  }
-  if ((pourc_volt>60) && (pourc_volt<80)){
-    leds_1[0] = CRGB(0, 4, 0);
-    FastLED.show(); 
-  }
-  if ((pourc_volt>40) && (pourc_volt<60)){
-    leds_1[0] = CRGB(4, 4, 0);
-    FastLED.show(); 
-  }
-  if ((pourc_volt>20) && (pourc_volt<40)){
-    leds_1[0] = CRGB(4, 1, 0);
-    FastLED.show(); 
-  }
-  if (pourc_volt<20){
-    leds_1[0] = CRGB(4, 0, 0);
-    FastLED.show();
-  }  
-
-  /* LED cube */
-
-  int i=0;
-  while (i<13){
-    leds_2[i] = CRGB(0, 0, 255);
-    leds_2[i+12] = CRGB(0, 0, 255);
-    leds_2[i+24] = CRGB(0, 0, 255);
-    leds_2[i+36] = CRGB(0, 0, 255);
-    leds_2[i+48] = CRGB(0, 0, 255);
-    if(i>0){
-          leds_2[i-1]=CRGB(0, 0, 0);
-          leds_2[i+11]=CRGB(0, 0, 0);
-          leds_2[i+23]=CRGB(0, 0, 0);
-          leds_2[i+35]=CRGB(0, 0, 0);
-          leds_2[i+47]=CRGB(0, 0, 0);
-    }
-    FastLED.show();
-    i++;
-
-    /* Mouvements */
-
-    Vector rawAccel = mpu.readRawAccel();
+  Vector rawAccel = mpu.readRawAccel();
   Vector normAccel = mpu.readNormalizeAccel();
 
   /*if(normAccel.ZAxis > 18){
@@ -310,32 +208,24 @@ void loop() {
     case 0:
       break;
     case 1:
-      Serial.println("bas");
-      mySerial.println("bas");
+      Serial.println("down");
       break;
     /*case 2:
       Serial.println("pause");
       break;*/
     case 3:
-      Serial.println("droite");
-      mySerial.println("droite");
+      Serial.println("right");
       break;
     case 4:
-      Serial.println("gauche");
-      mySerial.println("gauche");
-      break;*/
+      Serial.println("left");
+      break;
     case 5:
       Serial.println("rot left");
-      mySerial.println("rotleft");
       break;
     case 6:
       Serial.println("rot right");
-      mySerial.println("rotright");
       break;    
    }
    cas=0;
-
-    
-    delay(42);  
-  }
+  
 }
