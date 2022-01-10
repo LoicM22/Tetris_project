@@ -1,17 +1,10 @@
-#include <FastLED.h>
-#define LED_PIN     7
-#define NUM_LEDS    64
 #include <Wire.h>
 #include <MPU6050.h>
-
-int i=0;
-CRGB leds[NUM_LEDS];
 
 MPU6050 mpu;
 
 int cas;
 
-int xcas;
 int Sp = 4;
 int Sn = -4;
 int idState=0;
@@ -73,26 +66,6 @@ void checkSettings()
 
 void loop() {
   
-  while (i<9){
-    leds[i] = CRGB(0, 0, 255);
-    leds[i+8] = CRGB(0, 0, 255);
-    leds[i+16] = CRGB(0, 0, 255);
-    leds[i+24] = CRGB(0, 0, 255);
-    leds[i+32] = CRGB(0, 0, 255);
-    leds[i+40] = CRGB(0, 0, 255);
-    leds[i+48] = CRGB(0, 0, 255);
-    leds[i+56] = CRGB(0, 0, 255);
-    if(i>0){
-          leds[i-1]=CRGB(0, 0, 0);
-          leds[i+7]=CRGB(0, 0, 0);
-          leds[i+15]=CRGB(0, 0, 0);
-          leds[i+23]=CRGB(0, 0, 0);
-          leds[i+31]=CRGB(0, 0, 0);
-          leds[i+39]=CRGB(0, 0, 0);
-          leds[i+47]=CRGB(0, 0, 0);
-          leds[i+55]=CRGB(0, 0, 0);
-    }
-    FastLED.show();
     Vector rawAccel = mpu.readRawAccel();
     Vector normAccel = mpu.readNormalizeAccel();
   
@@ -174,15 +147,6 @@ void loop() {
             idState= 0;
         }
     }
-
-
-    else if(rawAccel.XAxis >10000){
-      cas=5;
-    }
-
-    else if(rawAccel.XAxis <-10000){
-      cas=6;
-    }
     
     switch(cas){
     case 0:
@@ -199,15 +163,8 @@ void loop() {
     case 4:
       Serial.println("left");
       break;
-    case 5:
-      Serial.println("turn left");
-      break;
-    case 6:
-      Serial.println("turn right");
-      break;
   }
   cas=0;
     delay(42);
-    i++;
   }
 }
