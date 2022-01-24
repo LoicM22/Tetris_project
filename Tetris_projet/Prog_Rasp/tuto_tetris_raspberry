@@ -1,0 +1,15 @@
+#Library
+sudo apt install python3
+sudo pip install pygame
+
+
+#To connect to the HC-05
+#(XX:XX:XX:XX:XX:XX code depends on your stuff)
+sudo rfcomm connect hci0 98:D3:91:FD:E6:9D 1
+
+#To imitate a keyboard
+blu_key.py
+
+#To run the game
+cd tetris_bluetooth
+run game.py
