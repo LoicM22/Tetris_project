@@ -1,3 +1,8 @@
+#########################################################
+# INSPIRED BY FARHAN TETRIS PROGRAM #
+#########################################################
+
+
 # getting function from library
 import pygame
 import time
