@@ -323,7 +323,7 @@ void loop() {
     case 4:
       Serial.println("gauche");
       mySerial.println("gauche");
-      break;*/
+      break;
     case 5:
       Serial.println("rot left");
       mySerial.println("rotleft");
