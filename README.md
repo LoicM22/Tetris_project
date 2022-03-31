@@ -1,6 +1,7 @@
 # Tetris_project
 
-The goal of this project was to create a wireless controller to a Tetris game which is coding in Python.
+The goal of this project was to create a wireless controller to a Tetris game which is coding in Python. 
+All the steps for the creation of this project are detailed on "final_notice_tetris_project.pdf".
 
 # Details of each folder
 
